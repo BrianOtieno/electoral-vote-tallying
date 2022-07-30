@@ -56,6 +56,7 @@ func setupRouter() *gin.Engine {
 			protected.GET("/presidential/county/results", controllers.GetResultsByCounty)
 			protected.GET("/presidential/country/results", controllers.GetResultsByCountry)
 			protected.GET("presidential/country/total", controllers.GetTotalVotes)
+			protected.PUT("presidential/alt/:pollingstationid/:altcode", controllers.UpdatePresidentialVotesByCode)
 		}
 	}
 
@@ -71,33 +72,34 @@ func main() {
 	// }
 	database.DBCon.AutoMigrate(&models.User{})
 	database.DBCon.AutoMigrate(&models.Forms{})
-	database.DBCon.AutoMigrate(&models.Polingdata{})
+	database.DBCon.AutoMigrate(&models.Pollingdata{})
 
-	// // CREATE TEST DATA
+	// CREATE TEST DATA
 
-	// // User Data
-	// database.DBCon.Create(&models.User{Username: "OBrien", Firstname: "Brian", Lastname: "Otieno", Phonenumber: "+254723328969", Email: "gebryo@intelligencia.com", Password: "$2a$14$SaSgFyNhW9ncAmMf19BTg.wSlAV2dctl/MXNsSdpYKupJE6AWAhpy", Pollingstationid: "1", Role: 1, Approved: true})
+	// User Data
+	database.DBCon.Create(&models.User{Username: "OBrien", Firstname: "Brian", Lastname: "Otieno", Phonenumber: "+254723328969", Email: "gebryo@intelligencia.com", Password: "$2a$14$SaSgFyNhW9ncAmMf19BTg.wSlAV2dctl/MXNsSdpYKupJE6AWAhpy", Pollingstationid: "2", Pollingstation: "MAWEGO BOARDING PRIMARY", Registerdvoters: 1350, Role: 1, Approved: true})
+	database.DBCon.Create(&models.User{Username: "jdoe", Firstname: "Jane", Lastname: "Doe", Phonenumber: "+254713846445", Email: "jane.doe.com", Password: "$2a$14$hTW2RgNLwKpnG4tNVKMZLed2thwKqtSuB7OOJhsJmKg8HD8/FRjkS", Pollingstationid: "1", Pollingstation: "KOKWANYO PRIMARY SCHOOL", Registerdvoters: 1350, Role: 1, Approved: true})
 
-	// // Polling Data
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "2", Candidate: "Raila Odinga", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "MAWEGO BOARDING PRIMARY", Votes: 825})
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "2", Candidate: "William Ruto", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "MAWEGO BOARDING PRIMARY", Votes: 2})
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "2", Candidate: "Wajackoyah", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "MAWEGO BOARDING PRIMARY", Votes: 1})
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "2", Candidate: "Waihiga", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "MAWEGO BOARDING PRIMARY", Votes: 0})
+	// Polling Data
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "2", Candidate: "Raila Odinga", Altcode: "C01", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "MAWEGO BOARDING PRIMARY", Votes: 825})
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "2", Candidate: "William Ruto", Altcode: "C02", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "MAWEGO BOARDING PRIMARY", Votes: 2})
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "2", Candidate: "Wajackoyah", Altcode: "C03", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "MAWEGO BOARDING PRIMARY", Votes: 1})
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "2", Candidate: "Waihiga", Altcode: "C04", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "MAWEGO BOARDING PRIMARY", Votes: 0})
 
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "1", Candidate: "Raila Odinga", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "KOKWANYO PRIMARY SCHOOL", Votes: 920})
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "1", Candidate: "William Ruto", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "KOKWANYO PRIMARY SCHOOL", Votes: 1})
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "1", Candidate: "Wajackoyah", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "KOKWANYO PRIMARY SCHOOL", Votes: 1})
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "1", Candidate: "William Ruto", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "KOKWANYO PRIMARY SCHOOL", Votes: 0})
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "1", Candidate: "Raila Odinga", Altcode: "C01", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "KOKWANYO PRIMARY SCHOOL", Votes: 920})
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "1", Candidate: "William Ruto", Altcode: "C02", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "KOKWANYO PRIMARY SCHOOL", Votes: 1})
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "1", Candidate: "Wajackoyah", Altcode: "C03", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "KOKWANYO PRIMARY SCHOOL", Votes: 1})
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "1", Candidate: "William Ruto", Altcode: "C04", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "KOKWANYO PRIMARY SCHOOL", Votes: 0})
 
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "3", Candidate: "Raila Odinga", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "UMAI PRIMARY SCHOOL", Votes: 730})
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "3", Candidate: "William Ruto", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "UMAI PRIMARY SCHOOL", Votes: 1})
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "3", Candidate: "Wajackoyah", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "UMAI PRIMARY SCHOOL", Votes: 1})
-	// database.DBCon.Create(&models.Polingdata{Pollingstationid: "3", Candidate: "Waihiga", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "UMAI PRIMARY SCHOOL", Votes: 1})
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "3", Candidate: "Raila Odinga", Altcode: "C01", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "UMAI PRIMARY SCHOOL", Votes: 730})
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "3", Candidate: "William Ruto", Altcode: "C02", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "UMAI PRIMARY SCHOOL", Votes: 1})
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "3", Candidate: "Wajackoyah", Altcode: "C03", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "UMAI PRIMARY SCHOOL", Votes: 1})
+	database.DBCon.Create(&models.Pollingdata{Pollingstationid: "3", Candidate: "Waihiga", Altcode: "C04", Scid: "403", Ccode: "043", Cname: "HOMABAY", Scname: "RACHUONYO SOUTH", Pollingstation: "UMAI PRIMARY SCHOOL", Votes: 1})
 
-	// // Form 34A
-	// database.DBCon.Create(&models.Forms{Pollingstationid: "1"})
-	// database.DBCon.Create(&models.Forms{Pollingstationid: "2"})
-	// database.DBCon.Create(&models.Forms{Pollingstationid: "3"})
+	// Form 34A
+	database.DBCon.Create(&models.Forms{Pollingstationid: "1"})
+	database.DBCon.Create(&models.Forms{Pollingstationid: "2"})
+	database.DBCon.Create(&models.Forms{Pollingstationid: "3"})
 
 	r := setupRouter()
 	r.Run("127.0.0.1:8080")

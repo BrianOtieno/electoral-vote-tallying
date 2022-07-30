@@ -18,22 +18,27 @@ type User struct {
 	Email            string `json:"email" gorm:"unique"`
 	Password         string `json:"password"`
 	Pollingstationid string `json:"pollingstationid" gorm:"type:text" gorm:"uniqueIndex"`
+	Pollingstation   string `json:"pollingstation"`
+	Registerdvoters  int    `json:"registeredvoters"`
 	Role             int    `json:"role" validate:"required, eq=ADMIN|eq=USER|eq=SADMIN"`
 	Approved         bool   `json:"approved"`
 }
 
-type Polingdata struct {
+type Pollingdata struct {
 	// gorm.Model
 	Id               uint   `json:"id" gorm:"primary_key"`
 	Pollingstationid string `json:"pollingstationid"`
 	Candidate        string `json:"candidate" gorm:"type:text"`
 	Scid             string `json:"scid" gorm:"type:text"`
 	Ccode            string `json:"ccode" gorm:"type:text"`
+	Altcode          string `json:"altcode" gorm:"type:text"`
 	Cname            string `json:"cname" gorm:"type:text"`
 	Scname           string `json:"scname" gorm:"type:text"`
 	Pollingstation   string `json:"pollingstation"`
 	Votes            uint   `json:"votes"`
-	Registered       uint   `json:"registered"`
+	Agent            string `json:"agent"`
+	Deviceid         string `json:"deviceid"`
+	Gps              string `json:"gps"`
 }
 
 type Forms struct {
@@ -45,6 +50,9 @@ type Forms struct {
 	Updated_at       time.Time `json:"updated_at" gorm:"column:created_at; type:timestamp; default: NOW(); <-:update"`
 	Username         string    `json:"userid"`
 	Phonenumber      string    `json:"phonenumber"`
+	Deviceid         string    `json:"deviceid"`
+	Gps              string    `json:"gps"`
+	Agent            string    `json:"agent"`
 }
 
 // CreateUserRecord creates a user record in the database

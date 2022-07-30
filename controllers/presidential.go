@@ -10,7 +10,7 @@ import (
 )
 
 func GetPollingData(c *gin.Context) {
-	var pollingdata []models.Polingdata
+	var pollingdata []models.Pollingdata
 	if err := database.DBCon.Find(&pollingdata).Error; err != nil {
 		c.AbortWithStatus(404)
 		fmt.Println(err)
@@ -21,7 +21,7 @@ func GetPollingData(c *gin.Context) {
 
 func GetPollingDataById(c *gin.Context) {
 	pollingstationid := c.Params.ByName("pollingstationid")
-	var pollingdata []models.Polingdata
+	var pollingdata []models.Pollingdata
 
 	m := make(map[string]interface{})
 	m["pollingstationid"] = pollingstationid
@@ -34,9 +34,23 @@ func GetPollingDataById(c *gin.Context) {
 }
 
 func UpdatePresidentialVotes(c *gin.Context) {
-	var pollingdata models.Polingdata
+	var pollingdata models.Pollingdata
 	q := make(map[string]interface{})
 	q["id"] = c.Params.ByName("id")
+
+	if err := database.DBCon.Where(q).First(&pollingdata).Error; err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+	}
+	c.BindJSON(&pollingdata)
+	database.DBCon.Save(&pollingdata)
+	c.IndentedJSON(http.StatusOK, pollingdata)
+}
+
+func UpdatePresidentialVotesByCode(c *gin.Context) {
+	var pollingdata models.Pollingdata
+	q := make(map[string]interface{})
+	q["altcode"] = c.Params.ByName("altcode")
+	q["pollingstationid"] = c.Params.ByName("pollingstationid")
 
 	if err := database.DBCon.Where(q).First(&pollingdata).Error; err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
@@ -76,7 +90,7 @@ func UpdateForm(c *gin.Context) {
 	}
 	c.BindJSON(&forms)
 	database.DBCon.Save(&forms)
-	c.Status(http.StatusOK)
+	c.IndentedJSON(http.StatusOK, forms)
 }
 
 func GetResultsByCounty(c *gin.Context) {
@@ -89,7 +103,7 @@ func GetResultsByCounty(c *gin.Context) {
 
 	var result []Result
 	// round(votes*100/ sum(votes),2) as percentage
-	if err := database.DBCon.Table("polingdata").Select("cname, candidate, sum(votes) as votes").Group("cname, candidate").Order("votes desc").Find(&result).Error; err != nil {
+	if err := database.DBCon.Table("pollingdata").Select("cname, candidate, sum(votes) as votes").Group("cname, candidate").Order("votes desc").Find(&result).Error; err != nil {
 		c.AbortWithStatus(404)
 	}
 	c.IndentedJSON(http.StatusOK, result)
@@ -104,7 +118,7 @@ func GetResultsByCountry(c *gin.Context) {
 
 	var result []Result
 	// round(votes*100/ sum(votes),2) as percentage
-	if err := database.DBCon.Table("polingdata").Select("candidate, sum(votes) as votes").Group("candidate").Order("votes desc").Find(&result).Error; err != nil {
+	if err := database.DBCon.Table("pollingdata").Select("candidate, sum(votes) as votes").Group("candidate").Order("votes desc").Find(&result).Error; err != nil {
 		c.AbortWithStatus(404)
 	}
 	c.IndentedJSON(http.StatusOK, result)
@@ -118,7 +132,7 @@ func GetTotalVotes(c *gin.Context) {
 
 	var result []Result
 	// round(votes*100/ sum(votes),2) as percentage
-	if err := database.DBCon.Table("polingdata").Select("sum(votes) as votes").Take(&result).Error; err != nil {
+	if err := database.DBCon.Table("pollingdata").Select("sum(votes) as votes").Take(&result).Error; err != nil {
 		c.AbortWithStatus(404)
 	}
 	c.IndentedJSON(http.StatusOK, result)

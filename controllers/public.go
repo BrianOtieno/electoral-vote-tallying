@@ -61,10 +61,14 @@ type LoginPayload struct {
 
 // LoginResponse token response
 type LoginResponse struct {
-	Firstname string `json:"firstname"`
-	LastName  string `json:"lastname"`
-	Username  string `json:"username"`
-	Token     string `json:"token"`
+	Firstname        string `json:"firstname"`
+	LastName         string `json:"lastname"`
+	Username         string `json:"username"`
+	Token            string `json:"token"`
+	Pollingstationid string `json:"pollingstationid"`
+	Phonenumber      string `json:"phonenumber"`
+	Pollingstation   string `json:"pollingstation"`
+	Registerdvoters  int    `json:"registeredvoters"`
 }
 
 // Login logs users in
@@ -118,10 +122,14 @@ func Login(c *gin.Context) {
 	}
 
 	tokenResponse := LoginResponse{
-		Firstname: user.Firstname,
-		LastName:  user.Lastname,
-		Username:  user.Username,
-		Token:     signedToken,
+		Firstname:        user.Firstname,
+		LastName:         user.Lastname,
+		Username:         user.Username,
+		Token:            signedToken,
+		Pollingstationid: user.Pollingstationid,
+		Phonenumber:      user.Phonenumber,
+		Pollingstation:   user.Pollingstation,
+		Registerdvoters:  user.Registerdvoters,
 	}
 
 	c.JSON(200, tokenResponse)
