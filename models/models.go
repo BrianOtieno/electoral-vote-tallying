@@ -41,7 +41,162 @@ type Pollingdata struct {
 	Gps              string `json:"gps"`
 }
 
+type Parliamentary struct {
+	// gorm.Model
+	Id               uint   `json:"id" gorm:"primary_key"`
+	Pollingstationid string `json:"pollingstationid"`
+	Candidate        string `json:"candidate" gorm:"type:text"`
+	Scid             string `json:"scid" gorm:"type:text"`
+	Ccode            string `json:"ccode" gorm:"type:text"`
+	Altcode          string `json:"altcode" gorm:"type:text"`
+	Cname            string `json:"cname" gorm:"type:text"`
+	Scname           string `json:"scname" gorm:"type:text"`
+	Pollingstation   string `json:"pollingstation"`
+	Votes            uint   `json:"votes"`
+	Agent            string `json:"agent"`
+	Deviceid         string `json:"deviceid"`
+	Gps              string `json:"gps"`
+}
+
+type Gubernatorial struct {
+	// gorm.Model
+	Id               uint   `json:"id" gorm:"primary_key"`
+	Pollingstationid string `json:"pollingstationid"`
+	Candidate        string `json:"candidate" gorm:"type:text"`
+	Scid             string `json:"scid" gorm:"type:text"`
+	Ccode            string `json:"ccode" gorm:"type:text"`
+	Altcode          string `json:"altcode" gorm:"type:text"`
+	Cname            string `json:"cname" gorm:"type:text"`
+	Scname           string `json:"scname" gorm:"type:text"`
+	Pollingstation   string `json:"pollingstation"`
+	Votes            uint   `json:"votes"`
+	Agent            string `json:"agent"`
+	Deviceid         string `json:"deviceid"`
+	Gps              string `json:"gps"`
+}
+
+type Senatorial struct {
+	// gorm.Model
+	Id               uint   `json:"id" gorm:"primary_key"`
+	Pollingstationid string `json:"pollingstationid"`
+	Candidate        string `json:"candidate" gorm:"type:text"`
+	Scid             string `json:"scid" gorm:"type:text"`
+	Ccode            string `json:"ccode" gorm:"type:text"`
+	Altcode          string `json:"altcode" gorm:"type:text"`
+	Cname            string `json:"cname" gorm:"type:text"`
+	Scname           string `json:"scname" gorm:"type:text"`
+	Pollingstation   string `json:"pollingstation"`
+	Votes            uint   `json:"votes"`
+	Agent            string `json:"agent"`
+	Deviceid         string `json:"deviceid"`
+	Gps              string `json:"gps"`
+}
+
+type Mca struct {
+	// gorm.Model
+	Id               uint   `json:"id" gorm:"primary_key"`
+	Pollingstationid string `json:"pollingstationid"`
+	Candidate        string `json:"candidate" gorm:"type:text"`
+	Scid             string `json:"scid" gorm:"type:text"`
+	Ccode            string `json:"ccode" gorm:"type:text"`
+	Altcode          string `json:"altcode" gorm:"type:text"`
+	Cname            string `json:"cname" gorm:"type:text"`
+	Scname           string `json:"scname" gorm:"type:text"`
+	Pollingstation   string `json:"pollingstation"`
+	Votes            uint   `json:"votes"`
+	Agent            string `json:"agent"`
+	Deviceid         string `json:"deviceid"`
+	Gps              string `json:"gps"`
+}
+
+type Womenrep struct {
+	// gorm.Model
+	Id               uint   `json:"id" gorm:"primary_key"`
+	Pollingstationid string `json:"pollingstationid"`
+	Candidate        string `json:"candidate" gorm:"type:text"`
+	Scid             string `json:"scid" gorm:"type:text"`
+	Ccode            string `json:"ccode" gorm:"type:text"`
+	Altcode          string `json:"altcode" gorm:"type:text"`
+	Cname            string `json:"cname" gorm:"type:text"`
+	Scname           string `json:"scname" gorm:"type:text"`
+	Pollingstation   string `json:"pollingstation"`
+	Votes            uint   `json:"votes"`
+	Agent            string `json:"agent"`
+	Deviceid         string `json:"deviceid"`
+	Gps              string `json:"gps"`
+}
+
 type Forms struct {
+	Id               uint      `json:"id" gorm:"primary_key"`
+	Pollingstationid string    `json:"pollingstationid"`
+	Form             string    `json:"form"`
+	Macaddress       string    `json:"macaddress"`
+	Created_at       time.Time `json:"created_at" gorm:"column:created_at; type:timestamp; default: NOW(); not null; <-:create"`
+	Updated_at       time.Time `json:"updated_at" gorm:"column:created_at; type:timestamp; default: NOW(); <-:update"`
+	Username         string    `json:"userid"`
+	Phonenumber      string    `json:"phonenumber"`
+	Deviceid         string    `json:"deviceid"`
+	Gps              string    `json:"gps"`
+	Agent            string    `json:"agent"`
+}
+
+type ParliamentaryForms struct {
+	Id               uint      `json:"id" gorm:"primary_key"`
+	Pollingstationid string    `json:"pollingstationid"`
+	Form             string    `json:"form"`
+	Macaddress       string    `json:"macaddress"`
+	Created_at       time.Time `json:"created_at" gorm:"column:created_at; type:timestamp; default: NOW(); not null; <-:create"`
+	Updated_at       time.Time `json:"updated_at" gorm:"column:created_at; type:timestamp; default: NOW(); <-:update"`
+	Username         string    `json:"userid"`
+	Phonenumber      string    `json:"phonenumber"`
+	Deviceid         string    `json:"deviceid"`
+	Gps              string    `json:"gps"`
+	Agent            string    `json:"agent"`
+}
+
+type GubernatorialForms struct {
+	Id               uint      `json:"id" gorm:"primary_key"`
+	Pollingstationid string    `json:"pollingstationid"`
+	Form             string    `json:"form"`
+	Macaddress       string    `json:"macaddress"`
+	Created_at       time.Time `json:"created_at" gorm:"column:created_at; type:timestamp; default: NOW(); not null; <-:create"`
+	Updated_at       time.Time `json:"updated_at" gorm:"column:created_at; type:timestamp; default: NOW(); <-:update"`
+	Username         string    `json:"userid"`
+	Phonenumber      string    `json:"phonenumber"`
+	Deviceid         string    `json:"deviceid"`
+	Gps              string    `json:"gps"`
+	Agent            string    `json:"agent"`
+}
+
+type SenatorialForms struct {
+	Id               uint      `json:"id" gorm:"primary_key"`
+	Pollingstationid string    `json:"pollingstationid"`
+	Form             string    `json:"form"`
+	Macaddress       string    `json:"macaddress"`
+	Created_at       time.Time `json:"created_at" gorm:"column:created_at; type:timestamp; default: NOW(); not null; <-:create"`
+	Updated_at       time.Time `json:"updated_at" gorm:"column:created_at; type:timestamp; default: NOW(); <-:update"`
+	Username         string    `json:"userid"`
+	Phonenumber      string    `json:"phonenumber"`
+	Deviceid         string    `json:"deviceid"`
+	Gps              string    `json:"gps"`
+	Agent            string    `json:"agent"`
+}
+
+type McaForms struct {
+	Id               uint      `json:"id" gorm:"primary_key"`
+	Pollingstationid string    `json:"pollingstationid"`
+	Form             string    `json:"form"`
+	Macaddress       string    `json:"macaddress"`
+	Created_at       time.Time `json:"created_at" gorm:"column:created_at; type:timestamp; default: NOW(); not null; <-:create"`
+	Updated_at       time.Time `json:"updated_at" gorm:"column:created_at; type:timestamp; default: NOW(); <-:update"`
+	Username         string    `json:"userid"`
+	Phonenumber      string    `json:"phonenumber"`
+	Deviceid         string    `json:"deviceid"`
+	Gps              string    `json:"gps"`
+	Agent            string    `json:"agent"`
+}
+
+type WomenRepForms struct {
 	Id               uint      `json:"id" gorm:"primary_key"`
 	Pollingstationid string    `json:"pollingstationid"`
 	Form             string    `json:"form"`

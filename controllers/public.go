@@ -65,6 +65,7 @@ type LoginResponse struct {
 	LastName         string `json:"lastname"`
 	Username         string `json:"username"`
 	Token            string `json:"token"`
+	Role             int    `json:"role"`
 	Pollingstationid string `json:"pollingstationid"`
 	Phonenumber      string `json:"phonenumber"`
 	Pollingstation   string `json:"pollingstation"`
@@ -126,6 +127,7 @@ func Login(c *gin.Context) {
 		LastName:         user.Lastname,
 		Username:         user.Username,
 		Token:            signedToken,
+		Role:             user.Role,
 		Pollingstationid: user.Pollingstationid,
 		Phonenumber:      user.Phonenumber,
 		Pollingstation:   user.Pollingstation,
