@@ -43,6 +43,10 @@ func setupRouter() *gin.Engine {
 		{
 			public.POST("/login", controllers.Login)
 			public.POST("/signup", controllers.Signup)
+			public.GET("/parliamentarydata", controllers.GetParliamentaryData)
+			public.GET("/parliamentarydata/:pollingstationid", controllers.GetParliamentaryPollingDataById)
+			public.GET("/parliamentary/results", controllers.GetResultsByConstituency)
+			public.GET("/parliamentary/forms/:pollingstationid", controllers.GetParliamentaryFormByPollingId)
 		}
 
 		protected := api.Group("/auth").Use(middlewares.Authz())
